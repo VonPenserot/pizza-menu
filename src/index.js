@@ -49,8 +49,9 @@ const pizzaData = [
 function App() {
   return (
     <div>
-      <h1>Hello React!</h1>
-      <Pizza />
+      <Header />
+      <Menu />
+      <Footer />
     </div>
   );
 }
@@ -59,9 +60,34 @@ function Pizza() {
   return (
     <div>
       <img src="pizzas/spinaci.jpg" alt="Spinach" />
-      <h2>Pizza</h2>;<p>Bread with italian olive oil and rosemary</p>
+      <h2>Pizza</h2>
+      <p>Bread with italian olive oil and rosemary</p>
     </div>
   );
+}
+
+function Header() {
+  return <h1>Fast React Pizza Co.</h1>;
+}
+
+function Menu() {
+  return (
+    <div>
+      <h2>Our menu</h2>
+      <Pizza />
+    </div>
+  );
+}
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openHour = 12;
+  const closedHour = 22;
+
+  if (hour >= openHour && hour <= closedHour) alert("We're currently open!");
+  else alert("Sorry we are closed!");
+
+  return <footer>{new Date().toDateString()}. We're currently open!</footer>;
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
