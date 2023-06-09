@@ -66,30 +66,50 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
   return (
     <main className="menu">
       <h2>Our menu</h2>
-      {pizzaData.map((pizza) => (
-        <Pizza
-          name={pizza.name}
-          ingredients={pizza.ingredients}
-          photoName={pizza.photoName}
-          price={pizza.price}
-        />
-      ))}
+      {pizzas.length > 0 ? (
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => (
+            <Pizza
+              key={pizza.name}
+              name={pizza.name}
+              ingredients={pizza.ingredients}
+              photoName={pizza.photoName}
+              price={pizza.price}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p>We're still working on our menu. Please come back later :)</p>
+      )}
     </main>
   );
 }
 
-function Pizza(props) {
+function Pizza({ photoName, name, ingredients, price }) {
   return (
-    <div>
-      <img src={props.photoName} alt={props.name} />
+    <li className="pizza">
+      <img src={photoName} alt={name} />
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredients}</p>
-        <span>{props.price}</span>
+        <h3>{name}</h3>
+        <p>{ingredients}</p>
+        <span>{price}</span>
       </div>
+    </li>
+  );
+}
+
+function Order({ closedHour, openHour }) {
+  return (
+    <div className="order">
+      <p>
+        We're are open from {openHour}:00 until {closedHour}:00. Come visit us
+        or order online.
+      </p>
+      <button className="btn">Order</button>
     </div>
   );
 }
@@ -98,13 +118,19 @@ function Footer() {
   const hour = new Date().getHours();
   const openHour = 12;
   const closedHour = 22;
-
-  if (hour >= openHour && hour <= closedHour) alert("We're currently open!");
-  else alert("Sorry we are closed!");
+  const isOpen = hour >= openHour && hour <= closedHour;
+  // if (hour >= openHour && hour <= closedHour) alert("We're currently open!");
+  // else alert("Sorry we are closed!");
 
   return (
     <footer className="footer">
-      {new Date().toDateString()}. We're currently open!
+      {isOpen ? (
+        <Order closedHour={closedHour} openHour={openHour} />
+      ) : (
+        <p>
+          We're happy welcome you between {openHour}:00 and {closedHour}:00.
+        </p>
+      )}
     </footer>
   );
 }
